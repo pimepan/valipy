@@ -1,0 +1,10 @@
+setup.py
+test/__init__.py
+test/test.py
+valipy/__init__.py
+valipy/exceptions.py
+valipy/myFunctions.py
+valipy.egg-info/PKG-INFO
+valipy.egg-info/SOURCES.txt
+valipy.egg-info/dependency_links.txt
+valipy.egg-info/top_level.txt

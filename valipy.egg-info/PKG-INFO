@@ -1,0 +1,6 @@
+Metadata-Version: 2.1
+Name: valipy
+Version: 0.1.0
+Summary: A chainable, fluent Python library for validating data
+Author: Joaquin Jose Von Chong
+License: MIT
