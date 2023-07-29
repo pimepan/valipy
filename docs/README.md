@@ -1,3 +1,5 @@
+# Introduction
+
 ## Valipy
 
 Valipy is a simple, chainable and composable data validation library that aims to be used in any place where you need to make sure data is schematized in a certain way.
@@ -20,7 +22,3 @@ Valipy currently only supports **python >3.11**. This is beacuse Valipy uses som
 As easy as
 
 `pip install valipy`
-
-## Documentation
-
-check de documentation here

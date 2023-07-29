@@ -1,5 +1,7 @@
+setup.cfg
 setup.py
 test/__init__.py
+test/misc.py
 test/test.py
 valipy/__init__.py
 valipy/exceptions.py
