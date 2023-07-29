@@ -39,22 +39,6 @@ class Valipy:
 
         return self
 
-    def isInstance(self, val: Type) -> Self:
-        if not isinstance(self.input, val):
-            self.__pushToPipeline("isInstance", False)
-            return self
-        self.__pushToPipeline("isInstance", True)
-
-        return self
-
-    def isType(self, val:Type) -> Self:
-        if type(self.input) != val:
-            self.__pushToPipeline("isType", False)
-            return self
-        self.__pushToPipeline("isType", True)
-
-        return self
-
     def isNumber(self) -> Self:
         if type(self.input) != int and type(self.input) != float:
             self.__pushToPipeline("isNumber", False)
@@ -79,7 +63,6 @@ class Valipy:
                 return self
    
         
-    
 
     def isNone(self) -> Self:
         if self.input == None:
@@ -94,20 +77,49 @@ class Valipy:
             self.__pushToPipeline("isLower", False)
             return self
 
-        if self.input.islower():
+        if self.input.islower()== True: 
             self.__pushToPipeline("isLower", True)
+        else:
+            self.__pushToPipeline("isLower", False)
         return self
 
     def isUpperCase(self) -> Self:
         if type(self.input) != str:
             self.__pushToPipeline("isUpper", False)
             return self
-
-        if self.input.isupper():
+        if self.input.isupper() == True:
             self.__pushToPipeline("isUpper", True)
+        else:
+            self.__pushToPipeline("isUpper", False)
+        return self
+    def isCapitalized(self) -> Self:
+        if type(self.input) != str:
+            self.__pushToPipeline("isCapitalized", False)
+            return self
+        if self.input[0].isupper():
+            self.__pushToPipeline("isCapitalized", True)
+        else:
+            self.__pushToPipeline("isCapitalized", False)
+        return self
+    def isEveryWordCapitalized(self) -> Self:
+        if type(self.input) != str:
+            self.__pushToPipeline("isEveryWordCapitalized", False)
+            return self
+        for word in self.input.split():
+            if not word[0].isupper():
+                self.__pushToPipeline("isEveryWordCapitalized", False)
+                return self
+        self.__pushToPipeline("isEveryWordCapitalized", True)
         return self
 
     def atStart(self, val: Any):
+        # check if len exists for input
+        try:
+            len(self.input)
+        except TypeError:
+            self.__pushToPipeline("atStart", False)
+            return self
+
         if self.input[0] != val:
             self.__pushToPipeline("atStart", False)
             return self
@@ -116,6 +128,13 @@ class Valipy:
         return self
 
     def atEnd(self, val: Any):
+        # check if len exists for input
+        try:
+            len(self.input)
+        except TypeError:
+            self.__pushToPipeline("atEnd", False)
+            return self
+
         if self.input[-1] != val:
             self.__pushToPipeline("atEnd", False)
             return self
@@ -127,50 +146,105 @@ class Valipy:
         if type(self.input) != str:
             self.__pushToPipeline("isEmptyString", False)
             return self
+        if len(self.input) > 0:
+            self.__pushToPipeline("isEmptyString", False)
+            return self
         self.__pushToPipeline("isEmptyString", True)
         return self
 
-    def isEmptyArray(self) -> Self:
-        if type(self.input) != list:
-            self.__pushToPipeline("isEmptyArray", False)
+   
+    def isEmpty(self) -> Self:
+        # check if len exists for input
+        try:
+            len(self.input)
+        except TypeError:
+            self.__pushToPipeline("isEmpty", False)
             return self
-        self.__pushToPipeline("isEmptyArray", True)
-        return self
 
-    def isEmptyDict(self) -> Self:
-        if type(self.input) != dict:
-            self.__pushToPipeline("isEmptyDict", False)
+        if len(self.input) > 0:
+            self.__pushToPipeline("isEmpty", False)
             return self
-        self.__pushToPipeline("isEmptyDict", True)
+        self.__pushToPipeline("isEmpty", True)
         return self
+   
 
     def isMinLength(self, val: int) -> Self:
+         # check if len exists for input
+        try:
+            len(self.input)
+        except TypeError:
+            self.__pushToPipeline("isMinLength", False)
+            return self
+        
         if len(self.input) < val:
             self.__pushToPipeline("isMinLength", False)
             return self
         self.__pushToPipeline("isMinLength", True)
         return self
 
-    def isMinEqualLength(self, val: int) -> Self:
-        if len(self.input) <= val:
-            self.__pushToPipeline("isMinEqualLength", False)
-            return self
-        self.__pushToPipeline("isMinEqualLength", True)
-        return self
-
     def isMaxLength(self, val: int) -> Self:
+         # check if len exists for input
+        try:
+            len(self.input)
+        except TypeError:
+            self.__pushToPipeline("isMaxLength", False)
+            return self
+        
         if len(self.input) > val:
             self.__pushToPipeline("isMaxLength", False)
             return self
         self.__pushToPipeline("isMaxLength", True)
         return self
-
-    def isMaxEqualLength(self, val: int) -> Self:
-        if len(self.input) >= val:
-            self.__pushToPipeline("isMaxEqualLength", False)
+    
+    def isInBetweenLength(self, min: int, max: int) -> Self:
+            # check if len exists for input
+            try:
+                len(self.input)
+            except TypeError:
+                self.__pushToPipeline("isInBetweenLength", False)
+                return self
+        
+            if len(self.input) < min or len(self.input) > max:
+                self.__pushToPipeline("isInBetweenLength", False)
+                return self
+            self.__pushToPipeline("isInBetweenLength", True)
             return self
-        self.__pushToPipeline("isMaxEqualLength", True)
+   
+    
+
+    def isInBetween(self, min: int, max: int) -> Self:
+        if type(self.input) != int and type(self.input) != float:
+            self.__pushToPipeline("isInBetween", False)
+            return self
+        if self.input <= min or self.input >= max:
+            self.__pushToPipeline("isInBetween", False)
+            return self
+        self.__pushToPipeline("isInBetween", True)
         return self
+
+    def isLessThan(self, val: int) -> Self:
+        if type(self.input) != int and type(self.input) != float:
+            self.__pushToPipeline("isLessThan", False)
+            return self
+        if self.input >= val:
+            self.__pushToPipeline("isLessThan", False)
+            return self
+        self.__pushToPipeline("isLessThan", True)
+        return self
+
+   
+
+    def isGreaterThan(self, val: int) -> Self:
+        if type(self.input) != int and type(self.input) != float:
+            self.__pushToPipeline("isGreaterThan", False)
+            return self
+        if self.input <= val:
+            self.__pushToPipeline("isGreaterThan", False)
+            return self
+        self.__pushToPipeline("isGreaterThan", True)
+        return self
+
+   
 
     def isNegative(self) -> Self:
         if type(self.input) != int and type(self.input) != float:
@@ -192,65 +266,6 @@ class Valipy:
         self.__pushToPipeline("isPositive", True)
         return self
 
-    def isBetween(self, min: int, max: int) -> Self:
-        if type(self.input) != int and type(self.input) != float:
-            self.__pushToPipeline("isBetween", False)
-            return self
-        if self.input < min or self.input > max:
-            self.__pushToPipeline("isBetween", False)
-            return self
-        self.__pushToPipeline("isBetween", True)
-        return self
-
-    def isBetweenOrEqual(self, min: int, max: int) -> Self:
-        if type(self.input) != int and type(self.input) != float:
-            self.__pushToPipeline("isBetweenOrEqual", False)
-            return self
-        if self.input <= min or self.input >= max:
-            self.__pushToPipeline("isBetweenOrEqual", False)
-            return self
-        self.__pushToPipeline("isBetweenOrEqual", True)
-        return self
-
-    def isLessThan(self, val: int) -> Self:
-        if type(self.input) != int and type(self.input) != float:
-            self.__pushToPipeline("isLessThan", False)
-            return self
-        if self.input >= val:
-            self.__pushToPipeline("isLessThan", False)
-            return self
-        self.__pushToPipeline("isLessThan", True)
-        return self
-
-    def isLessThanOrEqual(self, val: int) -> Self:
-        if type(self.input) != int and type(self.input) != float:
-            self.__pushToPipeline("isLessThanOrEqual", False)
-            return self
-        if self.input > val:
-            self.__pushToPipeline("isLessThanOrEqual", False)
-            return self
-        self.__pushToPipeline("isLessThanOrEqual", True)
-        return self
-
-    def isGreaterThan(self, val: int) -> Self:
-        if type(self.input) != int and type(self.input) != float:
-            self.__pushToPipeline("isGreaterThan", False)
-            return self
-        if self.input <= val:
-            self.__pushToPipeline("isGreaterThan", False)
-            return self
-        self.__pushToPipeline("isGreaterThan", True)
-        return self
-
-    def isGreaterThanOrEqual(self, val: int) -> Self:
-        if type(self.input) != int and type(self.input) != float:
-            self.__pushToPipeline("isGreaterThanOrEqual", False)
-            return self
-        if self.input < val:
-            self.__pushToPipeline("isGreaterThanOrEqual", False)
-            return self
-        self.__pushToPipeline("isGreaterThanOrEqual", True)
-        return self
 
     def isEven(self) -> Self:
         if type(self.input) != int:
@@ -327,3 +342,19 @@ class Valipy:
             if item["itPassedSome"] == True:
                 return True
         return False
+
+    def isInstance(self, val: Type) -> Self:
+        if not isinstance(self.input, val):
+            self.__pushToPipeline("isInstance", False)
+            return self
+        self.__pushToPipeline("isInstance", True)
+
+        return self
+
+    def isType(self, val:Type) -> Self:
+        if type(self.input) != val:
+            self.__pushToPipeline("isType", False)
+            return self
+        self.__pushToPipeline("isType", True)
+
+        return self

@@ -64,7 +64,16 @@ class InputIsUpperException(InputValidationException):
         self, input: Any, message: str = "Input", rule: str = ""
     ) -> None:
         super().__init__(input, message, rule)
-
+class InputIsCapitalizedException(InputValidationException):
+    def __init__(
+        self, input: Any, message: str = "Input", rule: str = ""
+    ) -> None:
+        super().__init__(input, message, rule)
+class InputIsEveryWordCapitalizedException(InputValidationException):
+    def __init__(
+        self, input: Any, message: str = "Input", rule: str = ""
+    ) -> None:
+        super().__init__(input, message, rule)
 class InputAtStartException(InputValidationException):
      def __init__(
         self, input: Any, message: str = "Input", rule: str = ""
@@ -83,25 +92,14 @@ class InputIsEmptyStringException(InputValidationException):
     ) -> None:
         super().__init__(input, message, rule)
 
-class InputIsEmptyArrayException(InputValidationException):
+class InputIsEmptyException(InputValidationException):
      def __init__(
         self, input: Any, message: str = "Input", rule: str = ""
     ) -> None:
         super().__init__(input, message, rule)
 
-class InputIsEmptyDictException(InputValidationException):
-     def __init__(
-        self, input: Any, message: str = "Input", rule: str = ""
-    ) -> None:
-        super().__init__(input, message, rule)
 
 class InputIsMinLengthException(InputValidationException):
-     def __init__(
-        self, input: Any, message: str = "Input", rule: str = ""
-    ) -> None:
-        super().__init__(input, message, rule)
-
-class InputIsMinEqualLengthException(InputValidationException):
      def __init__(
         self, input: Any, message: str = "Input", rule: str = ""
     ) -> None:
@@ -113,7 +111,34 @@ class InputIsMaxLengthException(InputValidationException):
     ) -> None:
         super().__init__(input, message, rule)
 
-class InputIsMaxEqualLengthException(InputValidationException):
+
+class InputIsInBetweenLengthException(InputValidationException):
+     def __init__(
+        self, input: Any, message: str = "Input", rule: str = ""
+    ) -> None:
+        super().__init__(input, message, rule)
+
+
+class InputIsLessThanException(InputValidationException):
+     def __init__(
+        self, input: Any, message: str = "Input", rule: str = ""
+    ) -> None:
+        super().__init__(input, message, rule)
+
+
+class InputIsGreaterThanException(InputValidationException):
+     def __init__(
+        self, input: Any, message: str = "Input", rule: str = ""
+    ) -> None:
+        super().__init__(input, message, rule)
+
+class InputIsInBetweenException(InputValidationException):
+     def __init__(
+        self, input: Any, message: str = "Input", rule: str = ""
+    ) -> None:
+        super().__init__(input, message, rule)
+
+class InputIsEvenException(InputValidationException):
      def __init__(
         self, input: Any, message: str = "Input", rule: str = ""
     ) -> None:
@@ -125,48 +150,6 @@ class InputIsNegativeException(InputValidationException):
     ) -> None:
         super().__init__(input, message, rule)
 class InputIsPositiveException(InputValidationException):
-     def __init__(
-        self, input: Any, message: str = "Input", rule: str = ""
-    ) -> None:
-        super().__init__(input, message, rule)
-
-class InputIsBetweenException(InputValidationException):
-     def __init__(
-        self, input: Any, message: str = "Input", rule: str = ""
-    ) -> None:
-        super().__init__(input, message, rule)
-
-class InputIsBetweenOrEqualException(InputValidationException):
-     def __init__(
-        self, input: Any, message: str = "Input", rule: str = ""
-    ) -> None:
-        super().__init__(input, message, rule)
-
-class InputIsLessThanException(InputValidationException):
-     def __init__(
-        self, input: Any, message: str = "Input", rule: str = ""
-    ) -> None:
-        super().__init__(input, message, rule)
-
-class InputIsLessThanOrEqualException(InputValidationException):
-     def __init__(
-        self, input: Any, message: str = "Input", rule: str = ""
-    ) -> None:
-        super().__init__(input, message, rule)
-
-class InputIsGreaterThanException(InputValidationException):
-     def __init__(
-        self, input: Any, message: str = "Input", rule: str = ""
-    ) -> None:
-        super().__init__(input, message, rule)
-
-class InputIsGreaterThanOrEqualException(InputValidationException):
-     def __init__(
-        self, input: Any, message: str = "Input", rule: str = ""
-    ) -> None:
-        super().__init__(input, message, rule)
-
-class InputIsEvenException(InputValidationException):
      def __init__(
         self, input: Any, message: str = "Input", rule: str = ""
     ) -> None:
@@ -214,6 +197,8 @@ class InputItPassedSomeException(InputValidationException):
     ) -> None:
         super().__init__(input, message, rule)
 
+
+
 # exception rules
 exception_rules: dict = {
     "isEqual": InputIsEqualException,
@@ -223,24 +208,23 @@ exception_rules: dict = {
     "isNumeric": InputIsNumericException,
     "isNone": InputIsNoneException,
     "isLower": InputIsLowerException,
+    "isCapitalized": InputIsCapitalizedException,
+    "isEveryWordCapitalized": InputIsEveryWordCapitalizedException,
     "isUpper": InputIsUpperException,
     "atStart": InputAtStartException,
     "atEnd": InputAtEndException,
     "isEmptyString": InputIsEmptyStringException,
-    "isEmptyArray": InputIsEmptyArrayException,
-    "isEmptyDict": InputIsEmptyDictException,
-    "isMinLength": InputIsMinLengthException,
-    "isMinEqualLength": InputIsMinEqualLengthException,
+    "isEmpty": InputIsEmptyException,
+  
     "isMaxLength": InputIsMaxLengthException,
-    "isMaxEqualLength": InputIsMaxEqualLengthException,
+    "isInBetweenLength": InputIsInBetweenLengthException,
+    
+    "isLessThan": InputIsLessThanException,
+    "isGreaterThan": InputIsGreaterThanException,
     "isNegative": InputIsNegativeException,
     "isPositive": InputIsPositiveException,
-    "isBetween": InputIsBetweenException,
-    "isBetweenOrEqual": InputIsBetweenOrEqualException,
-    "isLessThan": InputIsLessThanException,
-    "isLessThanOrEqual": InputIsLessThanOrEqualException,
-    "isGreaterThan": InputIsGreaterThanException,
-    "isGreaterThanOrEqual": InputIsGreaterThanOrEqualException,
+    "isInBetween": InputIsInBetweenException,
+
     "isEven": InputIsEvenException,
     "isOdd": InputIsOddException,
     "itIncludes": InputItIncludesException,
