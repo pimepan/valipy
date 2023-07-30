@@ -6,7 +6,7 @@ def read_file(filename):
 setup(
     name='valipy',
     packages=find_packages(),
-    version='0.2.1',
+    version='0.2.2',
     description='A chainable, fluent Python library for validating data',
     long_description_content_type='text/markdown',
     long_description=read_file('readme.md'),
