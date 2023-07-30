@@ -14,6 +14,15 @@ class InputValidationException(Exception):
     def __str__(self) -> str:
         return f"{self.message} for {self.input} failed at rule {self.rule}"
 
+
+
+class InputSchemaNotMatchingKeysException(InputValidationException):
+    def __init__(
+        self, input: Any, message: str = "Input is not valid", rule: str = ""
+    ) -> None:
+        super().__init__(input, message, rule)
+    
+
 # specific Exceptions
 
 

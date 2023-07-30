@@ -16,6 +16,7 @@ Valipy currently only supports **python >3.11**. This is beacuse Valipy uses som
 - Plenty of validation rules  ())
 - Create your own validation rules
 - Reusable
+- Schema Validation
 
 ## Instalation
 

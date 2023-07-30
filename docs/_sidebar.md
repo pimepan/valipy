@@ -12,6 +12,7 @@
     - [Exception Based](overview.md#Exception-Based)
       - [Specific Exception For Each Rule](overview.md#Specific-Exception-for-each-rule)
       - [Considerations](overview.md#Considerations)
+    - [Schema Validation](overview.md#Schema-Validation)
 - [API Reference](API.md)
 
   - [Core](API.md#Core)

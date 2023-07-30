@@ -5,14 +5,12 @@
 ### Valipy
 
 * **Signature**: `Valipy()`
-* **Arguments**
-  * `input:Any`
 * **Usage:**
 
 This function is the entry point for your Valipy pipeline. Once you call it you can start chaining validations rules on it
 
 ```python
-Valipy('some text').isType(str).validate() # True
+Valipy('some text').isType(str).validate('some text') # True
 ```
 
 ## Validation Strategies
@@ -20,6 +18,9 @@ Valipy('some text').isType(str).validate() # True
 ### validate
 
 * **Signature**: `validate()`
+* **Arguments**
+
+  * `input:Any`
 * **returns:**
 
   * **`bool`**
@@ -34,22 +35,23 @@ Valipy('some text').isType(str).validate() # True
 ### tryValidate
 
 * **Signature**: `tryValidate()`
+* **Arguments**
+
+  * `input:Any`
 * **returns:**
 
-  * `<str,InputValidationException> `
+  * `[str,InputValidationException] `
 * **Usage:**
 
 This function is the end part of a validation pipeline and is used inside a try, except block. it returns the **input or** an **InputValidationException**
 
 ```python
 try:
-    Valipy('some text').isType(str).tryValidate() # True
+    Valipy().isType(str).tryValidate('some text') # True
 except InputValidationException as e:
     print(e)
     # handle error here
 ```
-
-
 
 ## Built In Rules
 
@@ -62,9 +64,9 @@ except InputValidationException as e:
   This rule performs an equality check on the input agains passed argument
 
 ```python
-Valipy('some text').isEqual('some text').validate() # True
+Valipy().isEqual('some text').validate('some text') # True
 
-Valipy('some text').isEqual('different text').validate() # False
+Valipy().isEqual('different text').validate('some text') # False
 ```
 
 ### isNumber
@@ -76,11 +78,11 @@ Valipy('some text').isEqual('different text').validate() # False
 > Note:  this method check the **input type**
 
 ```python
-Valipy(10).isNumber().validate() # True
+Valipy().isNumber().validate(10) # True
 
-Valipy(10.5).isNumber().validate() # True
+Valipy().isNumber().validate(10.5) # True
 
-Valipy('10').isNumber().validate() # False
+Valipy().isNumber().validate('10') # False
 ```
 
 ### isNumeric
@@ -90,15 +92,15 @@ Valipy('10').isNumber().validate() # False
   Unlike [isNumber()](#isNumber), this method will cast number strings and accept them as number inputs
 
 ```python
-Valipy(10).isNumeric().validate() # True
+Valipy().isNumeric().validate(10) # True
 
-Valipy(10.5).isNumeric().validate() # True
+Valipy().isNumeric().validate(10.5) # True
 
-Valipy('10').isNumeric().validate() # True
+Valipy().isNumeric().validate('10') # True
 
-Valipy('10.5').isNumeric().validate() # True
+Valipy().isNumeric().validate('10.5') # True
 
-Valipy('text').isNumeric().validate() # False
+Valipy().isNumeric().validate('text') # False
 
 ```
 
@@ -113,9 +115,9 @@ Valipy('text').isNumeric().validate() # False
 !> Warning: this rule will fail if the input is not of a number
 
 ```python
-Valipy(10).isInt().validate() # True
+Valipy().isInt().validate(10) # True
 
-Valipy(10.5).isInt().validate() # False
+Valipy().isInt().validate(10.5) # False
 ```
 
 ### isFloat
@@ -127,15 +129,16 @@ Valipy(10.5).isInt().validate() # False
 !> Warning: this rule will fail if the input is not of a number
 
 ```python
-Valipy(10).isInt().validate() # True
+Valipy().isInt().validate(10) # True
 
-Valipy(10.5).isInt().validate() # False
+Valipy().isInt().validate(10.5) # False
 ```
 
-```python
-Valipy(10).isFloat().validate() # False
 
-Valipy(10.5).isFloat().validate() # True
+```python
+Valipy().isFloat().validate(10) # False
+
+Valipy().isFloat().validate(10.5) # True
 ```
 
 * **Signature**: `isUpperCase()`
@@ -144,10 +147,11 @@ Valipy(10.5).isFloat().validate() # True
 
 > Note: This pipeline will fail if the input is not of string type
 
-```python
-Valipy('SOME TEXT HERE').isUpperCase().validate() # True
 
-Valipy('SOME text Here').isLowerCase().validate() # False
+```python
+Valipy().isUpperCase().validate('SOME TEXT HERE') # True
+
+Valipy().isLowerCase().validate('SOME text Here') # False
 ```
 
 ### isLowerCase
@@ -158,10 +162,11 @@ Valipy('SOME text Here').isLowerCase().validate() # False
 
 > Note: This pipeline will fail if the input is not of string type
 
-```python
-Valipy('some text here').isLowerCase().validate() # True
 
-Valipy('SOME text Here').isLowerCase().validate() # False
+```python
+Valipy().isLowerCase().validate('some text here') # True
+
+Valipy().isLowerCase().validate('SOME text Here') # False
 ```
 
 ### isEveryWordCapitalized
@@ -172,10 +177,11 @@ Valipy('SOME text Here').isLowerCase().validate() # False
 
 > Note: This pipeline will fail if the input is not of string type
 
-```python
-Valipy('Some Text Here').isEveryWordCapitalized().validate() # True
 
-Valipy('Some text here').isEveryWordCapitalized().validate() # False
+```python
+Valipy().isEveryWordCapitalized().validate('Some Text Here') # True
+
+Valipy().isEveryWordCapitalized().validate('Some text here') # False
 
 ```
 
@@ -190,9 +196,9 @@ Valipy('Some text here').isEveryWordCapitalized().validate() # False
 !> Warning: This pipeline will fail if the string has spaces. Ex: String(' ')
 
 ```python
-Valipy('').isEmptyString().validate() # True
+Valipy().isEmptyString().validate('') # True
 
-Valipy(' ').isEmptyString().validate() # False
+Valipy().isEmptyString().validate(' ') # False
 
 ```
 
@@ -205,9 +211,9 @@ Valipy(' ').isEmptyString().validate() # False
 !> Warning: This pipeline will fail if input is not of string type
 
 ```python
-Valipy('Hello World').itHasSpaces().validate() # True
+Valipy().itHasSpaces().validate('Hello World') # True
 
-Valipy('HelloWorld').itHasSpaces().validate() # False
+Valipy().itHasSpaces().validate('HelloWorld') # False
 
 ```
 
@@ -219,14 +225,15 @@ Valipy('HelloWorld').itHasSpaces().validate() # False
 
 > Note: This pipeline only works with objects that contain a **len** method. Ex: **strings, lists, tuples, dicts, sets**
 
+
 ```python
-Valipy('').isEmptyString().validate() # True
+Valipy().isEmptyString().validate('') # True
 
-Valipy(' ').isEmptyString().validate() # False
+Valipy().isEmptyString().validate(' ') # False
 
-Valipy([]).isEmptyString().validate() # True
+Valipy().isEmptyString().validate([]) # True
 
-Valipy([1,2,3]).isEmptyString().validate() # False
+Valipy().isEmptyString().validate([1,2,3]) # False
 
 ```
 
@@ -240,14 +247,15 @@ Valipy([1,2,3]).isEmptyString().validate() # False
 
 > Note: This pipeline only works with objects that contain a **len** method. Ex: **strings, lists, tuples, dicts, sets**
 
+
 ```python
-Valipy('Some Text Here').atStart('S').validate() # True
+Valipy().atStart('S').validate('Some Text Here') # True
 
-Valipy('Some text here').atStart('N').validate() # False
+Valipy().atStart('N').validate('Some text here') # False
 
-Valipy([0,2,4,6]).atStart(0).validate() # True
+Valipy().atStart(0).validate([0,2,4,6]) # True
 
-Valipy([0,2,4,6]).atStart(1).validate() # False
+Valipy().atStart(1).validate([0,2,4,6]) # False
 
 
 ```
@@ -262,14 +270,15 @@ Valipy([0,2,4,6]).atStart(1).validate() # False
 
 > Note: This pipeline only works with objects that contain a **len** method. Ex: **strings, lists, tuples, dicts, sets**
 
+
 ```python
-Valipy('Some Text Here').atEnd('e').validate() # True
+Valipy().atEnd('e').validate('Some Text Here') # True
 
-Valipy('Some text here').atEnd('N').validate() # False
+Valipy().atEnd('N').validate('Some text here') # False
 
-Valipy([0,2,4,6]).atEnd(6).validate() # True
+Valipy().atEnd(6).validate([0,2,4,6]) # True
 
-Valipy([0,2,4,6]).atEnd(4).validate() # False
+Valipy().atEnd(4).validate([0,2,4,6]) # False
 
 
 ```
@@ -284,14 +293,15 @@ Valipy([0,2,4,6]).atEnd(4).validate() # False
 
 > Note: This pipeline only works with objects that contain a **len** method. Ex: **strings, lists, tuples, dicts, sets**
 
+
 ```python
-Valipy('Some Text Here').isMinLength(4).validate() # True
+Valipy().isMinLength(4).validate('Some Text Here') # True
 
-Valipy('Some text here').isMinLength(25).validate() # False
+Valipy().isMinLength(25).validate('Some text here') # False
 
-Valipy([0,2,4,6]).isMinLength(2).validate() # True
+Valipy().isMinLength(2).validate([0,2,4,6]) # True
 
-Valipy([0,2,4,6]).isMinLength(10).validate() # False
+Valipy().isMinLength(10).validate([0,2,4,6]) # False
 
 
 ```
@@ -306,14 +316,15 @@ Valipy([0,2,4,6]).isMinLength(10).validate() # False
 
 > Note: This pipeline only works with objects that contain a **len** method. Ex: **strings, lists, tuples, dicts, sets**
 
+
 ```python
-Valipy('Some Text Here').isMaxLength(4).validate() # True
+Valipy().isMaxLength(4).validate('Some Text Here') # True
 
-Valipy('Some text here').isMaxLength(25).validate() # False
+Valipy().isMaxLength(25).validate('Some text here') # False
 
-Valipy([0,2,4,6]).isMaxLength(2).validate() # False
+Valipy().isMaxLength(2).validate([0,2,4,6]) # False
 
-Valipy([0,2,4,6]).isMaxLength(10).validate() # True
+Valipy().isMaxLength(10).validate([0,2,4,6]) # True
 
 
 ```
@@ -329,10 +340,11 @@ Valipy([0,2,4,6]).isMaxLength(10).validate() # True
 
 > Note: This pipeline only works with objects that contain a **len** method. Ex: **strings, lists, tuples, dicts, sets**
 
-```python
-Valipy('Some Text Here').isInBetweenLength(0,20).validate() # True
 
-Valipy('Some text here').isInBetweenLength(20,30).validate() # False
+```python
+Valipy().isInBetweenLength(0,20).validate('Some Text Here') # True
+
+Valipy().isInBetweenLength(20,30).validate('Some text here') # False
 
 
 
@@ -349,10 +361,10 @@ Valipy('Some text here').isInBetweenLength(20,30).validate() # False
 !> Warning: This pipeline will fail if the input is not an int or float
 
 ```python
-Valipy(2).isLessThan(4).validate() # True
+Valipy().isLessThan(4).validate(2) # True
 
 
-Valipy(7).isLessThan(4).validate() # False
+Valipy().isLessThan(4).validate(7) # False
 ```
 
 ### isGreaterThan
@@ -366,10 +378,10 @@ Valipy(7).isLessThan(4).validate() # False
 !> Warning: This pipeline will fail if the input is not an int or float
 
 ```python
-Valipy(2).isLessThan(4).validate() # True
+Valipy().isLessThan(4).validate(2) # True
 
 
-Valipy(7).isLessThan(4).validate() # False
+Valipy().isLessThan(4).validate(7) # False
 ```
 
 ### isInBetween
@@ -384,10 +396,10 @@ Valipy(7).isLessThan(4).validate() # False
 !> Warning: This pipeline will fail if the input is not an int or float
 
 ```python
-Valipy(2).isInBetween(0,4).validate() # True
+Valipy().isInBetween(0,4).validate(2) # True
 
 
-Valipy(7).isInBetween(8,9).validate() # False
+Valipy().isInBetween(8,9).validate(7) # False
 ```
 
 ### isPositive
@@ -399,10 +411,10 @@ Valipy(7).isInBetween(8,9).validate() # False
 !> Warning: This pipeline will fail if the input is not an int or float
 
 ```python
-Valipy(2).isPositive().validate() # True
+Valipy().isPositive().validate(2) # True
 
 
-Valipy(-2).isPositive().validate() # False
+Valipy().isPositive().validate(-2) # False
 ```
 
 ### isNegative
@@ -414,10 +426,10 @@ Valipy(-2).isPositive().validate() # False
 !> Warning: This pipeline will fail if the input is not an int or float
 
 ```python
-Valipy(2).isNegative().validate() # False
+Valipy().isNegative().validate(2) # False
 
 
-Valipy(-2).isNegative().validate() # True
+Valipy().isNegative().validate(-2) # True
 ```
 
 ### isOdd
@@ -429,10 +441,10 @@ Valipy(-2).isNegative().validate() # True
 !> Warning: This pipeline will fail if the input is not an int or float
 
 ```python
-Valipy(2).isOdd().validate() # False
+Valipy().isOdd().validate(2) # False
 
 
-Valipy(3).isOdd().validate() # True
+Valipy().isOdd().validate(3) # True
 ```
 
 ### isEven
@@ -444,10 +456,10 @@ Valipy(3).isOdd().validate() # True
 !> Warning: This pipeline will fail if the input is not an int or float
 
 ```python
-Valipy(2).isTrue().validate() # True
+Valipy().isTrue().validate(2) # True
 
 
-Valipy(3).isTrue().validate() # False
+Valipy().isTrue().validate(3) # False
 ```
 
 ### itPassedSome
@@ -457,10 +469,10 @@ Valipy(3).isTrue().validate() # False
   It checks if the input passed atleast one stage of the pipeline
 
 ```python
-Valipy(2).isOdd().isInt().itPassedSome().validate # true
+Valipy().isOdd().isInt().itPassedSome().validate(3) # true
 
 
-Valipy(3).isOdd().isGreaterThan(5).itPassedSome().validate() # False
+Valipy().isOdd().isGreaterThan(5).itPassedSome().validate(3) # False
 ```
 
 ## Type Checking Rules
@@ -480,13 +492,12 @@ These rules are suited to check typing and even works for custom types!
 
 > Note: You can pass all built in python types: **str, int, float, complex, list, tuple, range, dict, set, frozenset, bool, bytes, bytearray, memoryview, NoneType**
 
-
 ```python
-Valipy(2).isType(int) # true
+Valipy().isType(int).validate(2) # true
 
-Valipy('hello').isType(str) # true
+Valipy().isType(str).validate('hello') # true
 
-Valipy(True).isType(bool) # true
+Valipy().isType(bool).validate(True) # true
 ```
 
 Note that we pass literally the type and is not wrapped between quotes
@@ -508,6 +519,6 @@ class Foo:
 	y:int = 25
 
 x = Foo()
-Valipy(x).isInstance(Foo) # true
+Valipy().isInstance(Foo).validate(x) # true
 
 ```

@@ -5,7 +5,7 @@
 The main goal of Valipy is to be as simple as possible to use. So Valipy uses method chaining to create a "validation pipeline".
 
 ```python
-Valipy('some text').isType(str).isMinLength(4).isEqual('some text').validate() # returns True
+Valipy().isType(str).isMinLength(4).isEqual('some text').validate('some text') # returns True
 ```
 
 The code abode validate that the string is: Of type String, the min length of the string is of 4 and is exactly equal to the value 'some text'
@@ -14,10 +14,11 @@ Note that we end the pipeline with the **validate()** method. this method will r
 
 ## Validation Strategies
 
-Valipy comes built in with 2 validation strats.
+Valipy comes built in with 3 validation strategies.
 
 - Boolean based
 - Exception Based
+- Schema Validation
 
 ### Boolean Based
 
@@ -27,11 +28,11 @@ Example:
 
 #### Successful
 
-`Valipy('some text').isType(str).validate() # returns True`
+`Valipy().isType(str).validate(`'some text'`) # returns True`
 
 #### Failed
 
-`Valipy('some text').isType(int).validate() # returns False`
+`Valipy().isType(int).validate(`'some text'`) # returns False`
 
 ### Exception Based
 
@@ -42,7 +43,7 @@ Example:
 ```python
 from valipy import Valipy, InputValidationException
 try:
-     Valipy('some text').isType(str).validate() 
+     Valipy().isType(str).validate('some text') 
    # success flow here
 
 except InputValidationException as e:
@@ -63,7 +64,7 @@ Example:
 ```python
 from valipy import Valipy, InputValidationException, InputIsTypeException
 try:
-     Valipy('some text').isType(str).isEqual('some text').validate() 
+     Valipy().isType(str).isEqual('some text').validate() 
    # success flow here
 
 except InputIsTypeException as e:
@@ -100,3 +101,25 @@ from valipy import InputIsIntException
 #### Considerations
 
 make sure to place **InputValidationException** at the bottom of your exception stack since all Valipy rules exceptions derive from it
+
+### Schema Validation
+
+usefull when you want to create models for data that comes from APIs and / or Databases
+
+Example:
+
+```python
+personModel = {
+    "name": Valipy().isType(str).isInBetweenLength(3, 20),
+    "age": Valipy().isType(int).isInBetween(18, 100),
+}
+
+testData = {
+    "name": "John Doe",
+    "age": 20,
+}
+# validate
+Valipy().schema(personModel).validateSchema(testData)
+```
+
+As you can see you first need to create a validation model and Valipy will

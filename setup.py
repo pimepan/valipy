@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 setup(
     name='valipy',
     packages=find_packages(),
-    version='0.1.6',
+    version='0.1.7',
     description='A chainable, fluent Python library for validating data',
     author='Joaquin Jose Von Chong',
     license='MIT',
