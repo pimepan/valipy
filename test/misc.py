@@ -7,21 +7,16 @@ personModel = {
 }
 
 testData = {
-    "name": "",
+    "name": "t",
 	"age": 20,
 }
 # validate
 try:
-	x = Valipy().schema(personModel).validateSchema(testData, strict=True, useExcept=True)
+	x = Valipy().isSchema(personModel).validateSchema(testData, strict=True, useExcept=True)
 
 except InputIsNumericException as e:
 	print(e)
 
 except InputIsInBetweenLengthException as e:
 	print(e)
-
-
-email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-email = Valipy().isValidPattern(email_pattern).validate('jjvonchong@outloo')
-
-print('email', email) # True
+	print(e.to_dict())

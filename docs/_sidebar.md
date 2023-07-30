@@ -22,8 +22,10 @@
 
     - [validate](API.md#validate)
     - [tryValidate](API.md#tryValidate)
+    - [validateSchema](API.md#validateSchema)
   - [Built In Rules](API.md#Built-In-Rules)
 
+    - [isValidPattern](API.md#isValidPattern)
     - [isEqual](API.md#isEqual)
     - [isNumber](API.md#isNumber)
     - [isNumeric](API.md#isNumeric)
@@ -48,7 +50,15 @@
     - [isOdd](API.md#isOdd)
     - [isEven](API.md#isEven)
     - [itPassedSome](API.md#itPassedSome)
+    - [isSchema](API.md#isSchema)
   - [Type Checking Rules](API.md#Type-Checking-Rules)
 
     - [isType](API.md#isType)
     - [isInstance](API.md#isInstance)
+
+    [Exceptions](API.md#Exceptions)
+
+    - [InputValidationException](API.md#InputValidationException)
+      - [to_dict](API.md#to_dict)
+    - [Granular Exceptions](API.md#Granular-Exceptions)
+    - [Considerations](API.md#Considerations)

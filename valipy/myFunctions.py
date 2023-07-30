@@ -23,7 +23,7 @@ class Valipy:
         for validator in self.pipeline:
             if validator['lamb'](input) == False:
                 if validator["rule"] in exception_rules:
-                    raise exception_rules[validator["rule"]](input = input, rule=validator["rule"])
+                    raise exception_rules[validator["rule"]](input = input,message=f"{str(input)} failed at rule {validator['rule']}" ,rule=validator["rule"])
                 else:
                     raise InputValidationException(input = input, rule=validator["rule"])
         return input

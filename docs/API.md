@@ -582,6 +582,7 @@ Note that we pass literally the type and is not wrapped between quotes
 
 > Note: This would be usefull if you are using classes as types
 
+
 ```python
 class Foo:
 	x:str = 'hello world'
@@ -591,3 +592,121 @@ x = Foo()
 Valipy().isInstance(Foo).validate(x) # true
 
 ```
+
+## Exceptions
+
+Valipy ships with an specific exception for each built in rule. You can either catch them all with InputValidationException or you can catch each rule respectively giving you extra control in your error handling workflow.
+
+### InputValidationException
+
+* **Signature**: `InputValidationException()`
+* **Extends:**
+  * **`Exception`**
+* **Arguments**
+  * `input:str`
+  * `message:str`
+  * `rule:str`
+  * `natural_language_message:str`
+* **Returns:**
+  * str
+* **Usage:**
+  import it and use it inside a try excep block
+
+```python
+from valipy import Valipy, InputValidationException
+try:
+     Valipy().isType(str).validate('some text') 
+   # success flow here
+
+except InputValidationException as e:
+	print(e)
+	# handle your error here...
+```
+
+#### InputValidationException.to_dict() {to_dict}
+
+* **Signature**: `InputValidationException.to_dict()`
+* **Returns:**
+  * dict[str]
+* **Usage:**
+  Access specific info from the error
+
+```python
+from valipy import Valipy, InputValidationException
+try:
+     Valipy().isType(str).validate('some text') 
+   # success flow here
+
+except InputValidationException as e:
+	print(e.to_dict())
+	'''
+	{
+          input:str, # the input you are validating
+          message:str, # a full text message of the error
+          rule:str, # at which rule it failed
+	   natural_language_message:str # a natural language error message that non developers could understand (could be used as an API error return message)
+	}
+	'''
+	# handle your error here...
+```
+
+!> Warning: the **natural_language_message** is only available in english and currently there is no plan of adding **i18n** support
+
+
+### Granular Exceptions
+
+* **Extends:**
+  * **`InputValidationException`**
+* **Arguments**
+  * `input:str`
+  * `message:str`
+  * `rule:str`
+  * `natural_language_message:str`
+* **Returns:**
+  * str
+* **Usage**
+
+Valipy ships for a specific exception for each rule so you can have further granularity for each rule failure
+
+Example:
+
+```python
+from valipy import Valipy, InputValidationException, InputIsTypeException
+try:
+     Valipy().isType(str).isEqual('some text').validate() 
+   # success flow here
+
+except InputIsTypeException as e:
+	print(e)
+	# handle error for isType() rule failure
+except InputValidationException as e:
+	print(e)
+	# this exception serve as a catch all.
+
+
+
+```
+
+Each built in rule in Valipy has its own Exception.
+
+You can import them by following the next  pattern:
+
+`Input<RuleName>Exeption`
+
+Example:
+
+isEqual() Exception
+
+```python
+from valipy import InputIsEqualException
+```
+
+isInt() Exception
+
+```python
+from valipy import InputIsIntException
+```
+
+#### Considerations
+
+make sure to place **InputValidationException** at the bottom of your exception stack since all Valipy rules exceptions derive from it so it is basically a **catch all** exceptions
