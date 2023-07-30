@@ -7,16 +7,16 @@ personModel = {
 }
 
 testData = {
-    "name": "",
+    "name": "t",
 	"age": 20,
 }
 # validate
 try:
-	x = Valipy().schema(personModel).validateSchema(testData, strict=True, useExcept=True)
+	x = Valipy().isSchema(personModel).validateSchema(testData, strict=True, useExcept=True)
 
 except InputIsNumericException as e:
 	print(e)
 
 except InputIsInBetweenLengthException as e:
 	print(e)
-
+	print(e.to_dict())

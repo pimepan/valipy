@@ -1,10 +1,16 @@
 from setuptools import find_packages, setup
-
+import os
+def read_file(filename):
+    with open(os.path.join(os.path.dirname(__file__), filename)) as file:
+        return file.read()
 setup(
     name='valipy',
     packages=find_packages(),
-    version='0.1.7',
+    version='0.2.1',
     description='A chainable, fluent Python library for validating data',
+    long_description_content_type='text/markdown',
+    long_description=read_file('readme.md'),
+
     author='Joaquin Jose Von Chong',
     license='MIT',
     readme='readme.md',

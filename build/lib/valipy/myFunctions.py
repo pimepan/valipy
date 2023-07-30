@@ -1,4 +1,4 @@
-from typing import Any, Self, Union, Type, Callable
+from typing import Any, Self, Union, Type, Callable, Literal
 from .exceptions import InputValidationException, InputSchemaNotMatchingKeysException, exception_rules
 import inspect
 
@@ -23,7 +23,7 @@ class Valipy:
         for validator in self.pipeline:
             if validator['lamb'](input) == False:
                 if validator["rule"] in exception_rules:
-                    raise exception_rules[validator["rule"]](input = input, rule=validator["rule"])
+                    raise exception_rules[validator["rule"]](input = input,message=f"{str(input)} failed at rule {validator['rule']}" ,rule=validator["rule"])
                 else:
                     raise InputValidationException(input = input, rule=validator["rule"])
         return input
@@ -40,7 +40,7 @@ class Valipy:
 
 
 
-    def schema(self, schema: dict[Self]) -> Self:
+    def isSchema(self, schema: dict[Self]) -> Self:
         self.schemaModel = schema
         return self
 
@@ -64,7 +64,14 @@ class Valipy:
                 return val.validate(data[key])
         
             
-            
+    def isValidPattern(self, pattern: Literal) -> Self:
+        import re
+        def lamb(x):
+            if re.match(pattern, x):
+                return True
+            return False
+        self.__pushToPipeline("isValidPattern", lamb)
+        return self
     # validation rules
     def isEqual(self, val: Any) -> Self:
         def lamb(x):
