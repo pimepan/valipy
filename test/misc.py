@@ -20,3 +20,8 @@ except InputIsNumericException as e:
 except InputIsInBetweenLengthException as e:
 	print(e)
 
+
+email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+email = Valipy().isValidPattern(email_pattern).validate('jjvonchong@outloo')
+
+print('email', email) # True

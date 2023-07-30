@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: valipy
-Version: 0.1.6
+Version: 0.1.7
 Summary: A chainable, fluent Python library for validating data
 Home-page: https://github.com/pimepan/valipy
 Author: Joaquin Jose Von Chong

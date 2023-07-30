@@ -40,7 +40,7 @@ Valipy('some text').isType(str).validate() # True
   * `input:Any`
 * **returns:**
 
-  * `[str,InputValidationException] `
+  * `[input<Any>,InputValidationException] `
 * **Usage:**
 
 This function is the end part of a validation pipeline and is used inside a try, except block. it returns the **input or** an **InputValidationException**
@@ -53,7 +53,61 @@ except InputValidationException as e:
     # handle error here
 ```
 
+### validateSchema
+
+* **Signature**: `tryValidate()`
+* **Arguments**
+
+  * `data: dict`
+  * `strict : bool`
+  * `useExcept : bool`
+* **returns:**
+
+  * `[input<Any>,InputValidationException] `
+* **Usage:**
+
+Validate a data model with multiple fields. Good for validating data before sending it to a database.
+
+```python
+personModel = {
+    "name": Valipy().isType(str).isInBetweenLength(3, 20),
+    "age": Valipy().isType(int).isInBetween(18, 100),
+}
+
+testData = {
+    "name": "John Doe",
+    "age": 20,
+}
+# validate
+Valipy().schema(personModel).validateSchema(testData)
+```
+
+#### Strict Mode
+
+if the strict flag is set to true, the input data keys must exactly match the schema keys.
+
+#### useExcept 
+
+If the useExcept flag is set to true, you can use validateSchema with the [tryValidate](#tryValidate) strategy.
+
 ## Built In Rules
+
+### isValidPattern
+
+* **Signature**: `isValidPattern(regex)`
+* **Arguments**
+  * `regex: Literal`
+* **Usage:**
+  This rule performs an equality check on the input agains passed argument
+
+```python
+email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+
+Valipy().isValidPattern(email_pattern).validate('email@domain.com') # True
+
+Valipy().isValidPattern(email_pattern).validate('email@') # False
+
+```
 
 ### isEqual
 
@@ -134,7 +188,6 @@ Valipy().isInt().validate(10) # True
 Valipy().isInt().validate(10.5) # False
 ```
 
-
 ```python
 Valipy().isFloat().validate(10) # False
 
@@ -146,7 +199,6 @@ Valipy().isFloat().validate(10.5) # True
   It checks if the whole input is upper cased.
 
 > Note: This pipeline will fail if the input is not of string type
-
 
 ```python
 Valipy().isUpperCase().validate('SOME TEXT HERE') # True
@@ -162,7 +214,6 @@ Valipy().isLowerCase().validate('SOME text Here') # False
 
 > Note: This pipeline will fail if the input is not of string type
 
-
 ```python
 Valipy().isLowerCase().validate('some text here') # True
 
@@ -176,7 +227,6 @@ Valipy().isLowerCase().validate('SOME text Here') # False
   It checks if the first letter of every word in the input is capitalized
 
 > Note: This pipeline will fail if the input is not of string type
-
 
 ```python
 Valipy().isEveryWordCapitalized().validate('Some Text Here') # True
@@ -225,7 +275,6 @@ Valipy().itHasSpaces().validate('HelloWorld') # False
 
 > Note: This pipeline only works with objects that contain a **len** method. Ex: **strings, lists, tuples, dicts, sets**
 
-
 ```python
 Valipy().isEmptyString().validate('') # True
 
@@ -246,7 +295,6 @@ Valipy().isEmptyString().validate([1,2,3]) # False
   It performs an equality check on the first element of the input
 
 > Note: This pipeline only works with objects that contain a **len** method. Ex: **strings, lists, tuples, dicts, sets**
-
 
 ```python
 Valipy().atStart('S').validate('Some Text Here') # True
@@ -270,7 +318,6 @@ Valipy().atStart(1).validate([0,2,4,6]) # False
 
 > Note: This pipeline only works with objects that contain a **len** method. Ex: **strings, lists, tuples, dicts, sets**
 
-
 ```python
 Valipy().atEnd('e').validate('Some Text Here') # True
 
@@ -292,7 +339,6 @@ Valipy().atEnd(4).validate([0,2,4,6]) # False
   It performs a less than **(<) on the input againts the passed minimun val**
 
 > Note: This pipeline only works with objects that contain a **len** method. Ex: **strings, lists, tuples, dicts, sets**
-
 
 ```python
 Valipy().isMinLength(4).validate('Some Text Here') # True
@@ -316,7 +362,6 @@ Valipy().isMinLength(10).validate([0,2,4,6]) # False
 
 > Note: This pipeline only works with objects that contain a **len** method. Ex: **strings, lists, tuples, dicts, sets**
 
-
 ```python
 Valipy().isMaxLength(4).validate('Some Text Here') # True
 
@@ -339,7 +384,6 @@ Valipy().isMaxLength(10).validate([0,2,4,6]) # True
   It checks if the input len is between a range
 
 > Note: This pipeline only works with objects that contain a **len** method. Ex: **strings, lists, tuples, dicts, sets**
-
 
 ```python
 Valipy().isInBetweenLength(0,20).validate('Some Text Here') # True
@@ -475,6 +519,32 @@ Valipy().isOdd().isInt().itPassedSome().validate(3) # true
 Valipy().isOdd().isGreaterThan(5).itPassedSome().validate(3) # False
 ```
 
+### isSchema
+
+* **Signature**: `itPassedSome()`
+* arguments:
+  * `dict[Valipy]`
+* **Usage:**
+  this saves internally a schema for a complex data type for later validation. Good for validating data from APIs or Databases
+
+> Note: Check also [validateSchema](#validateSchema) strategy
+
+```python
+personModel = {
+    "name": Valipy().isType(str).isInBetweenLength(3, 20),
+    "age": Valipy().isType(int).isInBetween(18, 100),
+}
+
+testData = {
+    "name": "John Doe",
+    "age": 20,
+}
+# validate
+Valipy().schema(personModel).validateSchema(testData)
+```
+
+> Note: isSchema should be used in isolation since the validation strategies cannot be further chained.
+
 ## Type Checking Rules
 
 These rules are suited to check typing and even works for custom types!
@@ -511,7 +581,6 @@ Note that we pass literally the type and is not wrapped between quotes
   good for checking if the input is an instance of a custom class / type
 
 > Note: This would be usefull if you are using classes as types
-
 
 ```python
 class Foo:
