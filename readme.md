@@ -1,5 +1,5 @@
 <div style="text-align:center">
-![logo](/docs/LOGO.png)
+<img src='docs/LOGO.png'/>
 <p>Dead Simple Data Validation In Python</p>
 </div>
 
