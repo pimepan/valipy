@@ -1,3 +1,7 @@
+![logo](docs/LOGO.png "logo")
+
+Dead simple python validation library
+
 ## Valipy
 
 Valipy is a simple, chainable and composable data validation library that aims to be used in any place where you need to make sure data is schematized in a certain way.
