@@ -12,11 +12,13 @@ Valipy currently only supports **python >3.11**. This is beacuse Valipy uses som
 
 ## Features
 
-- Chainable API
-- Plenty of validation rules  ())
-- Create your own validation rules
-- Reusable
-- Schema Validation
+* Chainable API
+* Plenty of validation rules  (20+)
+* Create your own validation rules
+* Reusable
+* Can use Regex
+* granular exceptions
+* Schema Validation
 
 ## Instalation
 
