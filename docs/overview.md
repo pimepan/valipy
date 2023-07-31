@@ -22,7 +22,7 @@ Valipy comes built in with 3 validation strategies.
 
 ### Boolean Based
 
-Boolean is the simplest of the two validation ways. It will simply return true or false if the validation pipeline passed or not. To use this strategy, simply finish the pipeline using the **validate()** method.
+Boolean is the simplest of all the validation strategies. It will simply return true or false if the validation pipeline passed or not. To use this strategy, simply finish the pipeline using the **validate()** method.
 
 Example:
 
@@ -119,7 +119,7 @@ testData = {
     "age": 20,
 }
 # validate
-Valipy().schema(personModel).validateSchema(testData)
+Valipy().isSchema(personModel).validateSchema(testData)
 ```
 
-As you can see you first need to create a validation model and Valipy will
+As you can see you first need to create a validation model and then pass it to the pipeline to compare against your data

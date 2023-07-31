@@ -1,6 +1,6 @@
 <div style="text-align:center">
-<img src='docs/LOGO.png'/>
-<p>Dead Simple Data Validation In Python</p>
+    <img src='docs/LOGO.png'/>
+    <p>Dead Simple Data Validation In Python</p>
 </div>
 
 # Valipy

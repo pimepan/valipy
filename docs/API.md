@@ -55,7 +55,7 @@ except InputValidationException as e:
 
 ### validateSchema
 
-* **Signature**: `tryValidate()`
+* **Signature**: `isSchema()`
 * **Arguments**
 
   * `data: dict`
